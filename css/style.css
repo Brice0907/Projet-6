@@ -42,9 +42,32 @@ h1 {
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    margin-bottom: 0px;
+    margin-top: 20px;
 }
 
 .photographer_section article img {
     height: 200px;
     width: 200px;
+    border-radius: 50%;
+    background-size: cover;
+    background-origin: content-box;
+}
+
+.pLocation {
+    color: #D3573C;
+    font-size: 20px;
+}
+
+.pTag {
+    font-size: 15px;
+}
+
+.pPrice {
+    color: #525252;
+    font-size: 14px;
+}
+
+p {
+    margin: 0px 0px;
 }
