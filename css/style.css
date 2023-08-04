@@ -71,3 +71,8 @@ h1 {
 p {
     margin: 0px 0px;
 }
+
+.link {
+    text-decoration: none;
+    text-align: center;
+}

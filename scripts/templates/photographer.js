@@ -4,6 +4,12 @@ function photographerTemplate(data) {
     const picture = `assets/photographers/${portrait}`;
 
     function getUserCardDOM() {
+
+        const link = document.createElement('a');
+        link.setAttribute('href', './photographer.html?id=' + id);
+        link.setAttribute('aria-label', name);
+        link.setAttribute('class', 'link');
+
         const article = document.createElement('article');
         const img = document.createElement('img');
         img.setAttribute("src", picture);
@@ -24,13 +30,15 @@ function photographerTemplate(data) {
         pPrice.textContent = price + "€/jour";
         pPrice.setAttribute('class', 'pPrice');
 
-        article.appendChild(img);
-        article.appendChild(h2);
+        link.appendChild(img)
+        link.appendChild(h2)
+
+        article.appendChild(link);
         article.appendChild(pLocation);
         article.appendChild(pTagline);
         article.appendChild(pPrice);
         // ajouter un attr aria-label sur les liens quand je les mettraient
         return (article);
     }
-    return { name, picture, city, country, tagline, price, getUserCardDOM }
+    return { id, name, picture, city, country, tagline, price, getUserCardDOM }
 }

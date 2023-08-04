@@ -6,6 +6,47 @@
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.info-photograph {
+    height: 200px;
+    width: 200px;
+    white-space: nowrap;
+}
+
+.name {
+    color: #D3573C;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.location {
+    color: #901C1C;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    color: #525252;
+}
+
+.portrait {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.trier {
+    margin: 0px 100px;
+}
+
+.trier-text {
+    font-weight: bold;
+    font-size: 19px;
 }
 
 .contact_button {
