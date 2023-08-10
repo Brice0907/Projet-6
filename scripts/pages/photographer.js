@@ -13,6 +13,7 @@ async function main() {
     document.querySelector('.name').textContent = user.name;
     document.querySelector('.location').textContent = user.city + ', ' + user.country;
     document.querySelector('.tagline').textContent = user.tagline;
+    document.querySelector('.float-tarif').textContent = user.price + '€ / jour';
 
     const img = document.querySelector('.portrait');
     img.setAttribute('src', picture);

@@ -42,11 +42,29 @@
 
 .trier {
     margin: 0px 100px;
+    display: flex;
 }
 
 .trier-text {
     font-weight: bold;
     font-size: 19px;
+    margin-right: 30px;
+}
+
+.float {
+    display: flex;
+    width: 300px;
+    height: 55px;
+    background: #DB8876;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    position: absolute;
+    bottom: 0;
+    right: 70px;
+    font-weight: bold;
 }
 
 .contact_button {

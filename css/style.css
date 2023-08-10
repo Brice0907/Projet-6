@@ -51,7 +51,7 @@ h1 {
     width: 200px;
     border-radius: 50%;
     background-size: cover;
-    background-origin: content-box;
+    /* background-origin: content-box; */
 }
 
 .pLocation {
