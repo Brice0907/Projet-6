@@ -1,11 +1,11 @@
 async function main() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
-    console.log(parseInt(id));
 
     const response = await fetch('.././data/photographers.json');
     const data = await response.json();
     const media = data.media.filter((el) => el.photographerId === parseInt(id));
+    console.log(media);
     const user = data.photographers.find((element) => element.id === parseInt(id));
 
     const picture = `assets/photographers/${user.portrait}`;
@@ -41,6 +41,7 @@ async function main() {
 
             img.setAttribute('src', photo);
             img.setAttribute('class', 'image');
+            img.addEventListener('click', () => displayModalCarousel());
             div.setAttribute('class', 'div');
 
             text.textContent = element.title;
@@ -50,6 +51,8 @@ async function main() {
             source.setAttribute('src', videoPath);
             source.setAttribute('type', 'video/mp4');
             video.setAttribute('class', 'image');
+            video.addEventListener('click', () => displayModalCarousel());
+
             video.appendChild(source);
             mainDiv.appendChild(video);
 
@@ -72,5 +75,31 @@ async function main() {
     const modalName = document.querySelector('.modal-name');
     modalName.textContent = user.name;
     modalName.setAttribute('class', 'modalName');
+
+    // Modal Carousel
+
+    function displayModalCarousel() {
+        const modalCarousel = document.querySelector('.carousel');
+        modalCarousel.style.display = 'block';
+    }
+
+    const cross = document.querySelector('.carouselClose')
+    cross.addEventListener('click', () => closeModalCarousel());
+    function closeModalCarousel() {
+        const modalCarousel = document.querySelector('.carousel');
+        modalCarousel.style.display = "none";
+    }
+
+    const chevronLeft = document.querySelector('.fa-chevron-left');
+    const chevronRight = document.querySelector('.fa-chevron-right');
+
+    console.log(media.length - 1);
+
+    media.forEach(img => {
+        const photo = `assets/${user.name}/${img.image}`;
+        const imageCarousel = document.querySelector('.carousel-image');
+        imageCarousel.setAttribute('src', photo);
+    })
+
 }
 main()

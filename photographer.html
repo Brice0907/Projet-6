@@ -12,8 +12,10 @@
 
 <body>
   <header>
-    <img src="assets/images/logo.png" class="logo" /> <!-- ajouter une balise a sur le logo sans oublié l'acces -->
-  </header>
+    <a href="index.html">
+      <img src="assets/images/logo.png" class="logo" />
+    </a>
+  </header><!-- ajouter une balise a sur le logo sans oublié l'acces -->
   <main id="main">
     <div class="photograph-header">
       <div class="info-photograph">
@@ -35,6 +37,22 @@
       <div class="float-tarif"></div>
     </div>
   </main>
+
+  <!-- SlideShow -->
+  <div class="carousel">
+    <div class="carousel-bloc">
+      <i class="fa-solid fa-xmark carouselClose"></i> <!-- changer la croix car elle ne fonctionne pas  -->
+      <div class="carousel-bloc-display">
+        <div><i class="fa-solid fa-chevron-left chevron"></i></div>
+        <img class="carousel-image"></img>
+        <div><i class="fa-solid fa-chevron-right chevron"></i></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Form -->
   <div id="contact_modal">
     <div class="modal">
       <header>
@@ -63,6 +81,7 @@
       </form>
     </div>
   </div>
+
   <script src="/scripts/pages/photographer.js"></script>
   <script src="/scripts/utils/contactForm.js"></script>
 </body>

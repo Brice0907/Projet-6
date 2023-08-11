@@ -214,3 +214,40 @@ input {
 .border-red {
     border: 2px solid red;
 }
+
+.carousel {
+    display: none;
+}
+
+.carousel-bloc {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    margin: auto;
+}
+
+.carousel-bloc-display {
+    display: flex;
+}
+
+.carouselClose {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    color: #901C1C;
+    font-size: 42px;
+}
+
+.carousel-image {
+    width: 500px;
+    height: 500px;
+}
+
+.chevron {
+    font-size: 35px;
+    color: #901C1C;
+}
