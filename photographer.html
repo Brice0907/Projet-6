@@ -38,13 +38,26 @@
   <div id="contact_modal">
     <div class="modal">
       <header>
-        <h2>Contactez-moi</h2>
+        <h2 class="modal-title">Contactez-moi</h2>
         <img src="assets/icons/close.svg" onclick="closeModal()" />
       </header>
-      <form>
-        <div>
-          <label>Prénom</label>
-          <input />
+      <div class="modal-name"></div>
+      <form class="form" method="get">
+        <div class="modal-div">
+          <label for="first">Prénom</label>
+          <input type="text" id="first" name="first" minlength="2" required /><br>
+        </div>
+        <div class="modal-div">
+          <label for="last">Nom</label>
+          <input type="text" id="last" name="last" minlength="2" required /><br>
+        </div>
+        <div class="modal-div">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required /><br>
+        </div>
+        <div class="modal-div modal-message">
+          <label for="message">Votre message</label>
+          <textarea class="input-message" type="text" id="message" name="message" minlength="2" required></textarea><br>
         </div>
         <button class="contact_button">Envoyer</button>
       </form>

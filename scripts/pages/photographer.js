@@ -5,11 +5,8 @@ async function main() {
 
     const response = await fetch('.././data/photographers.json');
     const data = await response.json();
-    console.log(data);
     const media = data.media.filter((el) => el.photographerId === parseInt(id));
-    console.log(media);
     const user = data.photographers.find((element) => element.id === parseInt(id));
-    console.log(user);
 
     const picture = `assets/photographers/${user.portrait}`;
 
@@ -71,5 +68,9 @@ async function main() {
         div.appendChild(like);
     });
     document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+
+    const modalName = document.querySelector('.modal-name');
+    modalName.textContent = user.name;
+    modalName.setAttribute('class', 'modalName');
 }
 main()
