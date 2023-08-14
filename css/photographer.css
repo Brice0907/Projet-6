@@ -289,3 +289,7 @@ input {
     margin-left: 65px;
     margin-right: 20px;
 }
+
+.pointer {
+    cursor: pointer;
+}

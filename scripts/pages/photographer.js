@@ -21,19 +21,18 @@ async function main() {
     img.setAttribute('alt', user.name);
 
     const pics = document.querySelector('.main-pics');
+
     let nbrLikes = 0
     media.forEach((element, index) => {
 
-        nbrLikes += element.likes;
         const mainDiv = document.createElement('div');
         mainDiv.setAttribute('class', 'main-div')
-
         const img = document.createElement('img');
         const photo = `assets/${user.name}/${element.image}`;
         const div = document.createElement('div');
         const text = document.createElement('p');
         const like = document.createElement('div');
-
+        let jaime = false;
         const video = document.createElement('video');
         const source = document.createElement('source');
         const videoPath = `assets/${user.name}/${element.video}`;
@@ -45,7 +44,12 @@ async function main() {
             div.setAttribute('class', 'div');
 
             text.textContent = element.title;
-            like.innerHTML = element.likes + "<i class='fa-solid fa-heart'></i>"
+
+            let likes = element.likes
+            like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+            like.addEventListener('click', () => liker(index))
+            nbrLikes += likes;
+
         } else {
 
             source.setAttribute('src', videoPath);
@@ -56,13 +60,34 @@ async function main() {
             video.appendChild(source);
             mainDiv.appendChild(video);
 
-            like.innerHTML = element.likes + "<i class='fa-solid fa-heart'></i>"
+            let likes = element.likes
+            like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+            like.addEventListener('click', () => liker(index))
+            nbrLikes += likes;
+
             text.textContent = element.title;
             div.setAttribute('class', 'div');
-            // video.controls = true; à mettre dans le slide show
             div.appendChild(like);
             div.appendChild(text);
         }
+
+        // Fonction pour Like
+        function liker(clickedIndex) {
+            if (jaime == false) {
+                let likes = media[clickedIndex].likes += 1;
+                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                nbrLikes++;
+                document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                jaime = true
+            } else {
+                let likes = media[clickedIndex].likes -= 1;
+                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                nbrLikes--;
+                document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                jaime = false
+            }
+        }
+        document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
 
         pics.appendChild(mainDiv);
         mainDiv.appendChild(img);
@@ -70,7 +95,6 @@ async function main() {
         div.appendChild(text);
         div.appendChild(like);
     });
-    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
 
     const modalName = document.querySelector('.modal-name');
     modalName.textContent = user.name;
