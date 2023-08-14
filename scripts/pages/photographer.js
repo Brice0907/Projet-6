@@ -22,7 +22,7 @@ async function main() {
 
     const pics = document.querySelector('.main-pics');
     let nbrLikes = 0
-    media.forEach(element => {
+    media.forEach((element, index) => {
 
         nbrLikes += element.likes;
         const mainDiv = document.createElement('div');
@@ -41,7 +41,7 @@ async function main() {
 
             img.setAttribute('src', photo);
             img.setAttribute('class', 'image');
-            img.addEventListener('click', () => displayModalCarousel());
+            img.addEventListener('click', () => displayModalCarousel(index));
             div.setAttribute('class', 'div');
 
             text.textContent = element.title;
@@ -51,7 +51,7 @@ async function main() {
             source.setAttribute('src', videoPath);
             source.setAttribute('type', 'video/mp4');
             video.setAttribute('class', 'image');
-            video.addEventListener('click', () => displayModalCarousel());
+            video.addEventListener('click', () => displayModalCarousel(index));
 
             video.appendChild(source);
             mainDiv.appendChild(video);
@@ -78,9 +78,11 @@ async function main() {
 
     // Modal Carousel
 
-    function displayModalCarousel() {
+    function displayModalCarousel(clickedIndex) {
         const modalCarousel = document.querySelector('.carousel');
         modalCarousel.style.display = 'block';
+        currentIndex = clickedIndex
+        updateCarousel()
     }
 
     const cross = document.querySelector('.carouselClose')
@@ -93,12 +95,37 @@ async function main() {
     const chevronLeft = document.querySelector('.fa-chevron-left');
     const chevronRight = document.querySelector('.fa-chevron-right');
 
-    console.log(media.length - 1);
+    let currentIndex = 0;
 
-    media.forEach(img => {
-        const photo = `assets/${user.name}/${img.image}`;
-        const imageCarousel = document.querySelector('.carousel-image');
-        imageCarousel.setAttribute('src', photo);
+    function updateCarousel() {
+        const test = document.querySelector('.carousel-affichage');
+        const imageTitle = document.querySelector('.carousel-image-title');
+
+        const currentMedia = media[currentIndex];
+
+        if (currentMedia.image) {
+            const photo = `assets/${user.name}/${currentMedia.image}`;
+            test.innerHTML = `<img src="${photo}" class="carousel-image" />`;
+        } else if (currentMedia.video) {
+            const videoPath = `assets/${user.name}/${currentMedia.video}`;
+            test.innerHTML = `<video class="carousel-video" controls><source src="${videoPath}" type="video/mp4"></video>`;
+        }
+
+        imageTitle.textContent = currentMedia.title;
+    }
+    updateCarousel()
+
+    chevronLeft.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
+    })
+    chevronRight.addEventListener('click', () => {
+        if (currentIndex < media.length - 1) {
+            currentIndex++;
+            updateCarousel();
+        }
     })
 
 }
