@@ -44,6 +44,7 @@
 .trier {
     margin: 0px 100px;
     display: flex;
+    align-items: center;
 }
 
 .trier-text {
@@ -292,4 +293,15 @@ input {
 
 .pointer {
     cursor: pointer;
+}
+
+select {
+    cursor: pointer;
+    width: 115px;
+    padding: 10px 10px;
+    border: 0px;
+    background: #901C1C;
+    border-radius: 3px;
+    color: white;
+    font-size: 16px;
 }

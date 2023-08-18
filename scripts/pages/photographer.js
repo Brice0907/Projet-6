@@ -152,5 +152,27 @@ async function main() {
         }
     })
 
+    // Modal Trie
+
+    const select = document.querySelector('.simple');
+
+    select.addEventListener("change", function () {
+
+        if (select.options[this.selectedIndex].value == "popularite") {
+            let trieLike = media.sort((a, b) => b.likes - a.likes);
+            console.log(trieLike);
+        }
+        if (select.options[this.selectedIndex].value == "date") {
+            let trieDate = media.sort((a, b) => b.date - a.date);
+            console.log(trieDate);
+
+        }
+        if (select.options[this.selectedIndex].value == "titre") {
+            let trieTitre = media.sort((a, b) => a.title.localeCompare(b.title));
+            console.log(trieTitre);
+
+        }
+    });
+
 }
 main()
