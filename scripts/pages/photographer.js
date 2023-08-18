@@ -21,81 +21,86 @@ async function main() {
     img.setAttribute('alt', user.name);
 
     const pics = document.querySelector('.main-pics');
+    function ClearAffichage() {
+        pics.innerHTML = ""
+    }
 
     let nbrLikes = 0
-    media.forEach((element, index) => {
+    function Affichage() {
+        media.forEach((element, index) => {
 
-        const mainDiv = document.createElement('div');
-        mainDiv.setAttribute('class', 'main-div')
-        const img = document.createElement('img');
-        const photo = `assets/${user.name}/${element.image}`;
-        const div = document.createElement('div');
-        const text = document.createElement('p');
-        const like = document.createElement('div');
-        let jaime = false;
-        const video = document.createElement('video');
-        const source = document.createElement('source');
-        const videoPath = `assets/${user.name}/${element.video}`;
-        if (element.image != undefined) {
+            const mainDiv = document.createElement('div');
+            mainDiv.setAttribute('class', 'main-div')
+            const img = document.createElement('img');
+            const photo = `assets/${user.name}/${element.image}`;
+            const div = document.createElement('div');
+            const text = document.createElement('p');
+            const like = document.createElement('div');
+            let jaime = false;
+            const video = document.createElement('video');
+            const source = document.createElement('source');
+            const videoPath = `assets/${user.name}/${element.video}`;
+            if (element.image != undefined) {
 
-            img.setAttribute('src', photo);
-            img.setAttribute('class', 'image');
-            img.addEventListener('click', () => displayModalCarousel(index));
-            div.setAttribute('class', 'div');
+                img.setAttribute('src', photo);
+                img.setAttribute('class', 'image');
+                img.addEventListener('click', () => displayModalCarousel(index));
+                div.setAttribute('class', 'div');
 
-            text.textContent = element.title;
+                text.textContent = element.title;
 
-            let likes = element.likes
-            like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
-            like.addEventListener('click', () => liker(index))
-            nbrLikes += likes;
-
-        } else {
-
-            source.setAttribute('src', videoPath);
-            source.setAttribute('type', 'video/mp4');
-            video.setAttribute('class', 'image');
-            video.addEventListener('click', () => displayModalCarousel(index));
-
-            video.appendChild(source);
-            mainDiv.appendChild(video);
-
-            let likes = element.likes
-            like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
-            like.addEventListener('click', () => liker(index))
-            nbrLikes += likes;
-
-            text.textContent = element.title;
-            div.setAttribute('class', 'div');
-            div.appendChild(like);
-            div.appendChild(text);
-        }
-
-        // Fonction pour Like
-        function liker(clickedIndex) {
-            if (jaime == false) {
-                let likes = media[clickedIndex].likes += 1;
+                let likes = element.likes
                 like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
-                nbrLikes++;
-                document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
-                jaime = true
+                like.addEventListener('click', () => liker(index))
+                nbrLikes += likes;
+
             } else {
-                let likes = media[clickedIndex].likes -= 1;
+
+                source.setAttribute('src', videoPath);
+                source.setAttribute('type', 'video/mp4');
+                video.setAttribute('class', 'image');
+                video.addEventListener('click', () => displayModalCarousel(index));
+
+                video.appendChild(source);
+                mainDiv.appendChild(video);
+
+                let likes = element.likes
                 like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
-                nbrLikes--;
-                document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
-                jaime = false
+                like.addEventListener('click', () => liker(index))
+                nbrLikes += likes;
+
+                text.textContent = element.title;
+                div.setAttribute('class', 'div');
+                div.appendChild(like);
+                div.appendChild(text);
             }
-        }
-        document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
 
-        pics.appendChild(mainDiv);
-        mainDiv.appendChild(img);
-        mainDiv.appendChild(div);
-        div.appendChild(text);
-        div.appendChild(like);
-    });
+            // Fonction pour Like
+            function liker(clickedIndex) {
+                if (jaime == false) {
+                    let likes = media[clickedIndex].likes += 1;
+                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                    nbrLikes++;
+                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                    jaime = true
+                } else {
+                    let likes = media[clickedIndex].likes -= 1;
+                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                    nbrLikes--;
+                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                    jaime = false
+                }
+            }
+            document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
 
+            pics.appendChild(mainDiv);
+            mainDiv.appendChild(img);
+            mainDiv.appendChild(div);
+            div.appendChild(text);
+            div.appendChild(like);
+        });
+    }
+    Affichage()
     const modalName = document.querySelector('.modal-name');
     modalName.textContent = user.name;
     modalName.setAttribute('class', 'modalName');
@@ -160,17 +165,16 @@ async function main() {
 
         if (select.options[this.selectedIndex].value == "popularite") {
             let trieLike = media.sort((a, b) => b.likes - a.likes);
-            console.log(trieLike);
-        }
-        if (select.options[this.selectedIndex].value == "date") {
+            ClearAffichage()
+            Affichage()
+        } else if (select.options[this.selectedIndex].value == "date") {
             let trieDate = media.sort((a, b) => b.date - a.date);
-            console.log(trieDate);
-
-        }
-        if (select.options[this.selectedIndex].value == "titre") {
+            ClearAffichage()
+            Affichage()
+        } else if (select.options[this.selectedIndex].value == "titre") {
             let trieTitre = media.sort((a, b) => a.title.localeCompare(b.title));
-            console.log(trieTitre);
-
+            ClearAffichage()
+            Affichage()
         }
     });
 
