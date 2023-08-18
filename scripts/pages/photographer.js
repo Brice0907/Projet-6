@@ -44,13 +44,14 @@ async function main() {
 
                 img.setAttribute('src', photo);
                 img.setAttribute('class', 'image');
+                img.setAttribute('alt', "Lilac breasted roller, closeup view")
                 img.addEventListener('click', () => displayModalCarousel(index));
                 div.setAttribute('class', 'div');
 
                 text.textContent = element.title;
 
                 let likes = element.likes
-                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
                 like.addEventListener('click', () => liker(index))
                 nbrLikes += likes;
 
@@ -59,13 +60,14 @@ async function main() {
                 source.setAttribute('src', videoPath);
                 source.setAttribute('type', 'video/mp4');
                 video.setAttribute('class', 'image');
+                video.setAttribute('alt', "Lilac breasted roller, closeup view")
                 video.addEventListener('click', () => displayModalCarousel(index));
 
                 video.appendChild(source);
                 mainDiv.appendChild(video);
 
                 let likes = element.likes
-                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
                 like.addEventListener('click', () => liker(index))
                 nbrLikes += likes;
 
@@ -79,19 +81,19 @@ async function main() {
             function liker(clickedIndex) {
                 if (jaime == false) {
                     let likes = media[clickedIndex].likes += 1;
-                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
+                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
                     nbrLikes++;
-                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
                     jaime = true
                 } else {
                     let likes = media[clickedIndex].likes -= 1;
                     like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
                     nbrLikes--;
-                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
                     jaime = false
                 }
             }
-            document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart"></i>';
+            document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
 
             pics.appendChild(mainDiv);
             mainDiv.appendChild(img);
@@ -101,6 +103,8 @@ async function main() {
         });
     }
     Affichage()
+    const modal = document.getElementById("contact_modal");
+    modal.setAttribute('aria-label', "Contact me " + user.name);
     const modalName = document.querySelector('.modal-name');
     modalName.textContent = user.name;
     modalName.setAttribute('class', 'modalName');
@@ -134,10 +138,10 @@ async function main() {
 
         if (currentMedia.image) {
             const photo = `assets/${user.name}/${currentMedia.image}`;
-            test.innerHTML = `<img src="${photo}" class="carousel-image" />`;
+            test.innerHTML = `<img src="${photo}" class="carousel-image" alt="Lilac breasted roller"/>`;
         } else if (currentMedia.video) {
             const videoPath = `assets/${user.name}/${currentMedia.video}`;
-            test.innerHTML = `<video class="carousel-video" controls><source src="${videoPath}" type="video/mp4"></video>`;
+            test.innerHTML = `<video class="carousel-video" controls><source src="${videoPath}" type="video/mp4" alt="Lilac breasted roller"></video>`;
         }
 
         imageTitle.textContent = currentMedia.title;

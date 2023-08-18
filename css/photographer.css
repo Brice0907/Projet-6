@@ -117,6 +117,16 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact_button:hover {
+    background-color: #DB8876;
+}
+
+.contact_button:focus {
+    background-color: #DB8876;
+
 }
 
 .modal {
