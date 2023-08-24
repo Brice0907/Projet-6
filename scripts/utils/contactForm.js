@@ -1,14 +1,32 @@
+const mainPage = document.querySelector('#main');
+const header = document.querySelector('.header');
+const body = document.querySelector('.body');
+
 function displayModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "block";
     modal.setAttribute('class', 'pop');
+
+    mainPage.setAttribute('aria-hidden', "true");
+    header.setAttribute('aria-hidden', "true");
+    modal.setAttribute('aria-hideden', 'false');
+    body.classList.add('no-scroll');
 }
 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
-}
 
+    mainPage.setAttribute('aria-hidden', "false");
+    header.setAttribute('aria-hidden', "false");
+    modal.setAttribute('aria-hideden', 'true');
+    body.classList.remove('no-scroll');
+}
+window.addEventListener("keydown", function (event) {
+    if (event.key == "Escape") {
+        closeModal()
+    }
+})
 const form = document.querySelector('.form');
 
 form.addEventListener('submit', async (e) => {

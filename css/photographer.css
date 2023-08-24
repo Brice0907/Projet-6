@@ -104,6 +104,7 @@
     justify-content: center;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .contact_button {
@@ -314,4 +315,17 @@ select {
     border-radius: 3px;
     color: white;
     font-size: 16px;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+button {
+    border: 0px;
+    background-color: white;
+}
+
+.btn-form {
+    background-color: #DB8876;
 }

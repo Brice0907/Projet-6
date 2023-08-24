@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="FR">
 
 <head>
   <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -10,12 +10,12 @@
   <title>Fisheye - photographe </title>
 </head>
 
-<body>
-  <header>
+<body class="body">
+  <header class="header">
     <a href="index.html" aria-label="Fisheye Home page">
       <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" />
     </a>
-  </header><!-- ajouter une balise a sur le logo sans oublié l'acces -->
+  </header>
   <main id="main">
     <div class="photograph-header">
       <div class="info-photograph">
@@ -24,15 +24,15 @@
         <p class="tagline"></p>
       </div>
       <button class="contact_button" onclick="displayModal()" aria-label="Contact me">Contactez-moi</button>
-      <img class="portrait"></img>
+      <img class="portrait" alt=""></img>
     </div>
     </div>
     <div class="trier">
-      <label for='select' class="trier-text">Trier par</label> <!-- peut etre mettre la div en label -->
+      <label for='select' class="trier-text">Trier par</label>
       <select name="triage" id="select" class="simple">
-        <option value="popularite" class="popularite">Popularité</option>
-        <option value="date" class="date">Date</option>
-        <option value="titre" class="titre">Titre</option>
+        <option value="popularite" class="popularite" aria-label="Trie par Popularité">Popularité</option>
+        <option value="date" class="date" aria-label="Trie par Date">Date</option>
+        <option value="titre" class="titre" aria-label="Trie par Titre">Titre</option>
       </select>
     </div>
     <div class="main-pics"></div>
@@ -43,13 +43,14 @@
   </main>
 
   <!-- SlideShow -->
-  <div class="carousel">
+  <div class="carousel" role="dialog" aria-describedby="Modal carousel">
     <div class="carousel-bloc" aria-label="Image closeup view">
-      <i class="fa-solid fa-xmark carouselClose" aria-label="Close dialog"></i>
+      <button class="carouselClose"><i class="fa-solid fa-xmark carouselClose" aria-label="Close dialog"></i></button>
       <div class="carousel-bloc-display">
-        <i class="fa-solid fa-chevron-left chevron" aria-label="Previous image"></i>
+        <button class="fleche_left"><i class="fa-solid fa-chevron-left chevron"
+            aria-label="Previous image"></i></button>
         <div class="carousel-affichage"></div>
-        <i class="fa-solid fa-chevron-right chevron" aria-label="Next image"></i>
+        <button class="fleche_right"><i class="fa-solid fa-chevron-right chevron" aria-label="Next image"></i></button>
       </div>
       <div class="carousel-image-title"></div>
     </div>
@@ -57,11 +58,12 @@
 
 
   <!-- Form -->
-  <div id="contact_modal">
+  <div id="contact_modal" role="dialog" aria-describedby="Modal formulaire">
     <div class="modal">
       <header>
         <h2 class="modal-title">Contactez-moi</h2>
-        <img aria-label="Close Contact form" src="assets/icons/close.svg" onclick="closeModal()" />
+        <button class="btn-form"><img aria-label="Close Contact form" src="assets/icons/close.svg"
+            onclick="closeModal()" /></button>
       </header>
       <div class="modal-name"></div>
       <form class="form" method="get">
