@@ -2,6 +2,7 @@ const mainPage = document.querySelector('#main');
 const header = document.querySelector('.header');
 const body = document.querySelector('.body');
 
+// Modal pour l'affichage du formulaire
 function displayModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "block";
@@ -13,6 +14,7 @@ function displayModal() {
     body.classList.add('no-scroll');
 }
 
+// Modal pour la fermeture du formulaire
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
@@ -22,13 +24,16 @@ function closeModal() {
     modal.setAttribute('aria-hideden', 'true');
     body.classList.remove('no-scroll');
 }
+
+// Ajout de la possibilité de fermer la modal avec la touche ECHAP
 window.addEventListener("keydown", function (event) {
     if (event.key == "Escape") {
         closeModal()
     }
 })
-const form = document.querySelector('.form');
 
+// Récupération des données du formulaire 
+const form = document.querySelector('.form');
 form.addEventListener('submit', async (e) => {
 
     e.preventDefault();
@@ -53,8 +58,8 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
+// Function Regex qui vérifie les données entrée par l'utilisateur dans le formulaire avant de valider
 function regexTest(contact) {
-
     let verif = true;
 
     if (!/^(?:[A-Z][a-z]*|[a-z][a-z]*)[ \-']?(?:[a-z]+[ \-']?)*[a-z]+$/.test(contact.firstName)) {

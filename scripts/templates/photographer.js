@@ -3,6 +3,7 @@ function photographerTemplate(data) {
 
     const picture = `assets/photographers/${portrait}`;
 
+    // Après avoir récupéré les données on les affiches  
     function getUserCardDOM() {
 
         const link = document.createElement('a');
@@ -37,7 +38,6 @@ function photographerTemplate(data) {
         article.appendChild(pLocation);
         article.appendChild(pTagline);
         article.appendChild(pPrice);
-        // ajouter un attr aria-label sur les liens quand je les mettraient
         return (article);
     }
     return { id, name, picture, city, country, tagline, price, getUserCardDOM }

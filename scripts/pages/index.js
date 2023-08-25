@@ -1,10 +1,11 @@
+// On récupère les données JSON
 async function getPhotographers() {
     const response = await fetch('.././data/photographers.json');
     const datas = await response.json();
-    console.log(datas);
     return datas;
 }
 
+// On envoie nos données au fichier templates/photographer.js
 async function displayData(photographers) {
     const photographersSection = document.querySelector(".photographer_section");
 
