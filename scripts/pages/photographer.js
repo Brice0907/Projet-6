@@ -22,12 +22,12 @@ async function main() {
     // Fonction qui permet de clear l'affichage pour le triage
     const pics = document.querySelector('.main-pics');
     function ClearAffichage() {
-        pics.innerHTML = ""
+        pics.innerHTML = "";
     }
 
     // Affichage des photos/vidéos du photographer
-    let nbrLikes = 0
     function Affichage() {
+        let nbrLikes = 0
         media.forEach((element, index) => {
 
             // DOM elements
@@ -56,7 +56,7 @@ async function main() {
                 // ajout des attributs
                 img.setAttribute('src', photo);
                 img.setAttribute('class', 'image');
-                img.setAttribute('alt', "Lilac breasted roller, closeup view")
+                img.setAttribute('alt', element.title + ", closeup view")
                 div.setAttribute('class', 'div');
                 text.textContent = element.title;
 
@@ -73,7 +73,7 @@ async function main() {
                 source.setAttribute('src', videoPath);
                 source.setAttribute('type', 'video/mp4');
                 video.setAttribute('class', 'image');
-                video.setAttribute('alt', "Lilac breasted roller, closeup view")
+                video.setAttribute('alt', element.title + ", closeup view")
                 text.textContent = element.title;
 
                 let likes = element.likes
@@ -158,16 +158,16 @@ async function main() {
     // Mise a jour de l'affichage de la photo/video du carousel
     let currentIndex = 0;
     function updateCarousel() {
-        const test = document.querySelector('.carousel-affichage');
+        const carouselAffichage = document.querySelector('.carousel-affichage');
         const imageTitle = document.querySelector('.carousel-image-title');
         const currentMedia = media[currentIndex];
         // Si image sinon vidéo
         if (currentMedia.image) {
             const photo = `assets/${user.name}/${currentMedia.image}`;
-            test.innerHTML = `<img src="${photo}" class="carousel-image" alt="Lilac breasted roller" tabindex="0"/>`;
+            carouselAffichage.innerHTML = `<img src="${photo}" class="carousel-image" alt="${currentMedia.title}" tabindex="0"/>`;
         } else if (currentMedia.video) {
             const videoPath = `assets/${user.name}/${currentMedia.video}`;
-            test.innerHTML = `<video class="carousel-video" controls tabindex="0"><source src="${videoPath}" type="video/mp4" alt="Lilac breasted roller"></video>`;
+            carouselAffichage.innerHTML = `<video class="carousel-video" controls tabindex="0"><source src="${videoPath}" type="video/mp4" alt="${currentMedia.title}"></video>`;
         }
         imageTitle.textContent = currentMedia.title;
     }
@@ -198,17 +198,13 @@ async function main() {
 
         if (select.options[this.selectedIndex].value == "popularite") {
             let trieLike = media.sort((a, b) => b.likes - a.likes);
-            ClearAffichage()
-            Affichage()
         } else if (select.options[this.selectedIndex].value == "date") {
             let trieDate = media.sort((a, b) => b.date - a.date);
-            ClearAffichage()
-            Affichage()
         } else if (select.options[this.selectedIndex].value == "titre") {
             let trieTitre = media.sort((a, b) => a.title.localeCompare(b.title));
-            ClearAffichage()
-            Affichage()
         }
+        ClearAffichage()
+        Affichage()
     });
 
     // Ajout de quelques fonctionnalité au clavier pour l'acces
