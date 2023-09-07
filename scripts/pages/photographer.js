@@ -1,13 +1,16 @@
 async function main() {
+
     // On récupère l'id dans l'URL
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
+
     // Puis compare l'id au données pour récupérer seulement celles qui correspondent
     const response = await fetch('.././data/photographers.json');
     const data = await response.json();
     const media = data.media.filter((el) => el.photographerId === parseInt(id));
     console.log(media);
     const user = data.photographers.find((element) => element.id === parseInt(id));
+
     // On affiche les données du photographe
     const picture = `assets/photographers/${user.portrait}`;
     document.querySelector('.name').textContent = user.name;
@@ -198,10 +201,13 @@ async function main() {
 
         if (select.options[this.selectedIndex].value == "popularite") {
             let trieLike = media.sort((a, b) => b.likes - a.likes);
+            console.log(trieLike);
         } else if (select.options[this.selectedIndex].value == "date") {
-            let trieDate = media.sort((a, b) => b.date - a.date);
+            let trieDate = media.sort((a, b) => new Date(b.date) - new Date(a.date));
+            console.log(trieDate);
         } else if (select.options[this.selectedIndex].value == "titre") {
             let trieTitre = media.sort((a, b) => a.title.localeCompare(b.title));
+            console.log(trieTitre);
         }
         ClearAffichage()
         Affichage()
