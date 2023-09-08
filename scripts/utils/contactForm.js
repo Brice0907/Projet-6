@@ -10,7 +10,7 @@ function displayModal() {
 
     mainPage.setAttribute('aria-hidden', "true");
     header.setAttribute('aria-hidden', "true");
-    modal.setAttribute('aria-hideden', 'false');
+    modal.setAttribute('aria-hidden', 'false');
     body.classList.add('no-scroll');
 }
 
@@ -21,7 +21,7 @@ function closeModal() {
 
     mainPage.setAttribute('aria-hidden', "false");
     header.setAttribute('aria-hidden', "false");
-    modal.setAttribute('aria-hideden', 'true');
+    modal.setAttribute('aria-hidden', 'true');
     body.classList.remove('no-scroll');
 }
 

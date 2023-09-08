@@ -7,7 +7,8 @@ async function main() {
     // Puis compare l'id au données pour récupérer seulement celles qui correspondent
     const response = await fetch('.././data/photographers.json');
     const data = await response.json();
-    const media = data.media.filter((el) => el.photographerId === parseInt(id));
+    let media = data.media.filter((el) => el.photographerId === parseInt(id));
+    let mediaAffi = media.sort((a, b) => b.likes - a.likes);
     console.log(media);
     const user = data.photographers.find((element) => element.id === parseInt(id));
 
@@ -24,106 +25,39 @@ async function main() {
 
     // Fonction qui permet de clear l'affichage pour le triage
     const pics = document.querySelector('.main-pics');
+    const floatLike = document.querySelector('.float-like');
     function ClearAffichage() {
         pics.innerHTML = "";
+        floatLike.innerHTML = "";
     }
 
-    // Affichage des photos/vidéos du photographer
-    function Affichage() {
-        let nbrLikes = 0
-        media.forEach((element, index) => {
+    // Modal Trie
+    const select = document.querySelector('.simple');
+    select.addEventListener("change", function () {
+        resetLikesCount()
+        if (select.options[this.selectedIndex].value == "popularite") {
+            mediaAffi.sort((a, b) => b.likes - a.likes);
+        } else if (select.options[this.selectedIndex].value == "date") {
+            mediaAffi.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else if (select.options[this.selectedIndex].value == "titre") {
+            mediaAffi.sort((a, b) => a.title.localeCompare(b.title));
+        }
+        ClearAffichage()
+        affichageMedia()
+    });
 
-            // DOM elements
-            const mainDiv = document.createElement('div');
-            mainDiv.setAttribute('class', 'main-div')
-
-            const img = document.createElement('img');
-            const btn = document.createElement('button');
-            btn.setAttribute('aria-label', "Open carrousel");
-
-            const photo = `assets/${user.name}/${element.image}`;
-
-            const div = document.createElement('div');
-            const text = document.createElement('p');
-            const like = document.createElement('div');
-            let jaime = false;
-
-            const video = document.createElement('video');
-            video.setAttribute('tabindex', "0");
-
-            const source = document.createElement('source');
-            const videoPath = `assets/${user.name}/${element.video}`;
-
-            // Si image sinon vidéo
-            if (element.image != undefined) {
-                // ajout des attributs
-                img.setAttribute('src', photo);
-                img.setAttribute('class', 'image');
-                img.setAttribute('alt', element.title + ", closeup view")
-                div.setAttribute('class', 'div');
-                text.textContent = element.title;
-
-                let likes = element.likes
-                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
-                // Event ouvrir le carousel
-                btn.addEventListener('click', () => displayModalCarousel(index));
-                // Event ajout d'un like
-                like.addEventListener('click', () => liker(index))
-
-                nbrLikes += likes;
-            } else {
-                // ajout des attributs
-                source.setAttribute('src', videoPath);
-                source.setAttribute('type', 'video/mp4');
-                video.setAttribute('class', 'image');
-                video.setAttribute('alt', element.title + ", closeup view")
-                text.textContent = element.title;
-
-                let likes = element.likes
-                like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
-
-                // Event ouvrir le carousel
-                btn.addEventListener('click', () => displayModalCarousel(index));
-                // Event ajout d'un like
-                like.addEventListener('click', () => liker(index))
-                nbrLikes += likes;
-
-                video.appendChild(source);
-                mainDiv.appendChild(btn);
-                btn.appendChild(video);
-                div.setAttribute('class', 'div');
-                div.appendChild(like);
-                div.appendChild(text);
-            }
-
-            // Fonction pour Like
-            function liker(clickedIndex) {
-                // Ajout d'un j'aime si il n'était pas like sinon on retire le j'aime
-                if (jaime == false) {
-                    let likes = media[clickedIndex].likes += 1;
-                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer' aria-label='likes'></i>"
-                    nbrLikes++;
-                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
-                    jaime = true
-                } else {
-                    let likes = media[clickedIndex].likes -= 1;
-                    like.innerHTML = likes + "<i class='fa-solid fa-heart pointer'></i>"
-                    nbrLikes--;
-                    document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
-                    jaime = false
-                }
-            }
-            document.querySelector('.float-like').innerHTML = nbrLikes + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
-
-            pics.appendChild(mainDiv);
-            mainDiv.appendChild(btn);
-            btn.appendChild(img)
-            mainDiv.appendChild(div);
-            div.appendChild(text);
-            div.appendChild(like);
+    const mainAffi = document.querySelector(".main-pics");
+    async function affichageMedia() {
+        let likeTotal = 0
+        await mediaAffi.forEach((medias, index) => {
+            const photographerModel = mediaTemplate(medias, user.name, index);
+            likeTotal += medias.likes;
+            floatLike.innerHTML = likeTotal + '<i class="fa-solid fa-heart" aria-label="likes"></i>';
+            const userCardDOM = photographerModel.getUserCardDOM();
+            mainAffi.appendChild(userCardDOM);
         });
     }
-    Affichage()
+    affichageMedia()
 
     // Modal Carousel
     const main = document.querySelector('#main');
@@ -132,7 +66,7 @@ async function main() {
     const cross = document.querySelector('.carouselClose')
 
     // Function d'ouverture du carousel
-    function displayModalCarousel(clickedIndex) {
+    window.displayModalCarousel = function displayModalCarousel(clickedIndex) {
         const modalCarousel = document.querySelector('.carousel');
 
         modalCarousel.style.display = 'block';
@@ -145,6 +79,7 @@ async function main() {
         body.classList.add('no-scroll');
         cross.focus();
     }
+
     // Function de fermeture du carousel
     cross.addEventListener('click', () => closeModalCarousel());
     function closeModalCarousel() {
@@ -156,7 +91,6 @@ async function main() {
         modalCarousel.setAttribute('aria-hidden', 'true');
         body.classList.remove('no-scroll');
     }
-
 
     // Mise a jour de l'affichage de la photo/video du carousel
     let currentIndex = 0;
@@ -194,24 +128,6 @@ async function main() {
             updateCarousel();
         }
     })
-
-    // Modal Trie
-    const select = document.querySelector('.simple');
-    select.addEventListener("change", function () {
-
-        if (select.options[this.selectedIndex].value == "popularite") {
-            let trieLike = media.sort((a, b) => b.likes - a.likes);
-            console.log(trieLike);
-        } else if (select.options[this.selectedIndex].value == "date") {
-            let trieDate = media.sort((a, b) => new Date(b.date) - new Date(a.date));
-            console.log(trieDate);
-        } else if (select.options[this.selectedIndex].value == "titre") {
-            let trieTitre = media.sort((a, b) => a.title.localeCompare(b.title));
-            console.log(trieTitre);
-        }
-        ClearAffichage()
-        Affichage()
-    });
 
     // Ajout de quelques fonctionnalité au clavier pour l'acces
     window.addEventListener("keydown", function (event) {
